@@ -1,5 +1,6 @@
 import requests
-import RiotConst as Const
+
+import lolpath.RiotConst as Const
 
 
 class RiotApi(object):
@@ -25,7 +26,13 @@ class RiotApi(object):
 
     def get_summoner_by_name(self, name):
         api_url = Const.URL['summoner_by_name'].format(
-            version=Const.API_VERSIONS['summoner'],
+            version=Const.API_VERSIONS['base'],
             names=name,
+            )
+        return self._request(api_url)
+
+    def get_static_champions(self):
+        api_url = Const.URL['static_champions'].format(
+            version=Const.API_VERSIONS['base']
             )
         return self._request(api_url)

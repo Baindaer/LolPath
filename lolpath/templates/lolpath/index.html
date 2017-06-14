@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% if lastest_summoner_list %}
-        <ul>
-        {% for summoner in lastest_summoner_list %}
-            <li><a href="/match/{{ summoner.id }}/">{{ summoner.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No Summoners are available.</p>
-    {% endif %}
-</body>
-</html>
+{% extends "lolpath/template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_tittle %}
+  LolPath Index
+{% endblock %}
+
+{% block body %}
+  {% if data %}
+    {{ data.data.Gragas }}
+  {% endif %}
+{% endblock %}

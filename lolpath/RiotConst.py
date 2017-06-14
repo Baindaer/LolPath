@@ -8,11 +8,12 @@ baindaer = {
 
 URL = {
     'base': 'https://{proxy}.api.riotgames.com/lol/{url}',
-    'summoner_by_name': 'summoner/v{version}/summoners/by-name/{names}'
+    'summoner_by_name': 'summoner/v{version}/summoners/by-name/{names}',
+    'static_champions': 'static-data/v{version}/champions',
 }
 
 API_VERSIONS = {
-    'summoner': '3'
+    'base': '3'
 }
 
 REGIONS = {
