@@ -1,0 +1,132 @@
+{% extends "lolpath/template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_tittle %}
+  LolPath match
+{% endblock %}
+    Lolpath Normal Match form
+{% block body %}
+
+
+    {% if match_id != False %}
+    <form class="lolpath_form" action="{% url 'lolpath:match_form' match_id.id %}" method="POST">
+        {% csrf_token %}
+      <nav class="navbar navbar-light">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item"><a href="/match/">Normal Matches</a></li>
+          <li class="breadcrumb-item active">Match details</li>
+        </ol>
+        <button type="submit" class="btn btn-warning" name="submit" value="edit_match" id="edit_match">Edit</button>
+        <button type="submit" class="btn btn-danger" name="submit" value="delete_match" id="delete_match">Delete</button>
+      </nav>
+      <fieldset id="fielset_form" disabled>
+    {% else %}
+      <form class="lolpath_form" action="{% url 'lolpath:match_new' %}" method="POST">
+      {% csrf_token %}
+    {% endif %}
+      <div class="form-group col-sm-6">
+        <label for="champion_id">Champion:</label>
+        <select id="champion_id" name="champion_id" class="form-control">
+          {% for c in champions %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="lane">Lane:</label>
+        <select id="lane" name="lane" class="form-control">
+          <option value="top">Top</option>
+          <option value="jungle">Jungle</option>
+          <option value="mid">Mid</option>
+          <option value="adcarry">ADCarry</option>
+          <option value="support">Support</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="match_date">Match date:</label>
+        <input type="date" class="form-control" name="match_date" id="match_date">
+      </div>
+      <div class="form-group col-sm-6">
+        <label for="duration">Duration:</label>
+        <input type="number" class="form-control" name="duration" id="duration">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="kills">Kills:</label>
+        <input type="number" class="form-control" name="kills" id="kills">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="deaths">Deaths:</label>
+        <input type="number" class="form-control" name="deaths" id="deaths">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="assists">Assists:</label>
+        <input type="number" class="form-control" name="assists" id="assists">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="level">Level:</label>
+        <input type="number" class="form-control" name="level" id="level">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="gold">Gold:</label>
+        <input type="number" class="form-control" name="gold" id="gold">
+      </div>
+      <div class="form-group col-xs-6 col-sm-4">
+        <label for="cs">Creep score:</label>
+        <input type="number" class="form-control" name="cs" id="cs">
+      </div>
+      <div class="form-group col-xs-6 col-sm-12 ">
+        <div class="[ form-group ]">
+          <input type="checkbox" name="win" value="win" id="fancy-checkbox-success" autocomplete="off" />
+          <div class="[ btn-group ]">
+            <label for="fancy-checkbox-success" class="[ btn btn-success ]" id="checkbox_button">
+              <span class="[ glyphicon glyphicon-ok ]"></span>
+              <span> </span>
+            </label>
+            <label for="fancy-checkbox-success" class="[ btn btn-default active ]" id="checkbox_tag">
+              Victory
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col-sm-12">
+        <button type="submit" class="btn btn-primary btn-lg btn-block" value="submit_match" name="submit" id="submit_match">Submit</button>
+      </div>
+    {% if match_id != False %}
+      </fieldset>
+    {% endif %}
+  </form>
+
+{% endblock %}
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'lolpath/js/match_form.js' %}"></script>
+{% if match_id != False %}
+<script>
+  // $("#fielset_form").replaceWith(function() { return this.innerHTML; });
+  $('#champion_id').val({{ match_id.champion_id.id }});
+  $('#lane').val('{{ match_id.lane }}');
+  $('#match_date').val('{{ match_id.match_date|date:"Y-m-d" }}');
+  $('#duration').val({{ match_id.duration }});
+  $('#kills').val({{ match_id.kills }});
+  $('#deaths').val({{ match_id.deaths }});
+  $('#assists').val({{ match_id.assists }});
+  $('#gold').val({{ match_id.gold }});
+  $('#level').val({{ match_id.level }});
+  $('#cs').val({{ match_id.cs }});
+  {% if match_id.win == True %}
+    $('#checkbox_button').removeClass("btn-danger");
+    $('#checkbox_button').addClass("btn-success");
+    $('#checkbox_tag').text("Victory");
+  {% else %}
+    $('#checkbox_button').removeClass("btn-success");
+    $('#checkbox_button').addClass("btn-danger");
+    $('#checkbox_tag').text("Defeat");
+  {% endif %}
+  $('#submit_match').hide();
+
+</script>
+
+{% endif %}
+{% endblock %}
