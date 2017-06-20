@@ -56,7 +56,7 @@ class MatchReg(models.Model):
     assists = models.IntegerField('Assists')
     match_date = models.DateField('Match date')
     ranked = models.BooleanField('Ranked game')
-    gold = models.IntegerField('Gold earned')
+    gold = models.FloatField('Gold earned')
     level = models.IntegerField('Level reached')
     cs = models.IntegerField('Creep score')
     duration = models.IntegerField('Duration')
@@ -71,3 +71,21 @@ class MatchReg(models.Model):
         k, d, a = self.kills, self.deaths, self.assists
         kda = (k + a) / d
         return kda
+
+
+class ChampReport(models.Model):
+    champion_id = models.ForeignKey(Champion)
+    lane = models.CharField('Lane', max_length=32)
+    time_played = models.IntegerField('Time played')
+    kills_avg = models.FloatField('Average kills')
+    deaths_avg = models.FloatField('Averege deaths')
+    assists_avg = models.FloatField('Average assists')
+    games = models.IntegerField('Total games')
+    wins = models.IntegerField('Total wins')
+    defeats = models.IntegerField('Total loses')
+    cs_min = models.FloatField('CS per min')
+    gold_min = models.FloatField('Gold per min')
+    kda = models.FloatField('KDA ratio')
+    performance = models.FloatField('LolPath points')
+    summoner_id = models.ForeignKey(Summoner)
+

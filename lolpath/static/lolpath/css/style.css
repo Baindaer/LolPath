@@ -7,6 +7,14 @@ body {
 
 }
 
+.win-tag {
+  background-color: green;
+}
+
+.lose-tag {
+  background-color: red;
+}
+
 /* Checkbox */
 .form-group input[type="checkbox"] {
     display: none;

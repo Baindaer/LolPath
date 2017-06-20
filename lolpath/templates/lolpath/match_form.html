@@ -10,7 +10,8 @@
 
 
     {% if match_id != False %}
-    <form class="lolpath_form" action="{% url 'lolpath:match_form' match_id.id %}" method="POST">
+      <form class="lolpath_form" action="{% url 'lolpath:match_form' match_id.id %}" method="POST">
+      <h2>View match</h2>
         {% csrf_token %}
       <nav class="navbar navbar-light">
         <ol class="breadcrumb">
@@ -18,13 +19,25 @@
           <li class="breadcrumb-item"><a href="/match/">Normal Matches</a></li>
           <li class="breadcrumb-item active">Match details</li>
         </ol>
-        <button type="submit" class="btn btn-warning" name="submit" value="edit_match" id="edit_match">Edit</button>
+        <button type="submit" class="btn btn-primary" name="submit" value="edit_match" id="edit_match">Edit</button>
         <button type="submit" class="btn btn-danger" name="submit" value="delete_match" id="delete_match">Delete</button>
+        <button type="submit" class="btn btn-secondary" name="submit" value="cancel" id="cancel_edit">Cancel</button>
       </nav>
       <fieldset id="fielset_form" disabled>
     {% else %}
+      <h2>Register new normal match</h2>
       <form class="lolpath_form" action="{% url 'lolpath:match_new' %}" method="POST">
       {% csrf_token %}
+      <nav class="navbar navbar-light">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/match/">Normal Matches</a></li>
+        <li class="breadcrumb-item active">New match</li>
+      </ol>
+      <button type="submit" class="btn btn-primary" name="submit" value="submit_match" id="submit_match">Submit</button>
+      <button type="submit" class="btn btn-primary" name="submit" value="submit_new" id="submit_new">Submit & new</button>
+      <button type="submit" class="btn btn-secondary" name="submit" value="cancel" id="cancel_new">Cancel</button>
+    </nav>
     {% endif %}
       <div class="form-group col-sm-6">
         <label for="champion_id">Champion:</label>
@@ -70,7 +83,7 @@
       </div>
       <div class="form-group col-xs-6 col-sm-4">
         <label for="gold">Gold:</label>
-        <input type="number" class="form-control" name="gold" id="gold">
+        <input type="number" class="form-control" name="gold" id="gold" step="0.1">
       </div>
       <div class="form-group col-xs-6 col-sm-4">
         <label for="cs">Creep score:</label>
@@ -91,9 +104,6 @@
         </div>
       </div>
 
-      <div class="form-group col-sm-12">
-        <button type="submit" class="btn btn-primary btn-lg btn-block" value="submit_match" name="submit" id="submit_match">Submit</button>
-      </div>
     {% if match_id != False %}
       </fieldset>
     {% endif %}
@@ -128,5 +138,13 @@
 
 </script>
 
+{% endif %}
+{% if pre_date %}
+   <script>
+    $('#match_date').val('{{ pre_date|date:"Y-m-d" }}');
+    $('#champion_id').val('{{ pre_champion }}');
+    $('#lane').val('{{ pre_lane }}');
+    $('#champion_id').focus();
+  </script>
 {% endif %}
 {% endblock %}

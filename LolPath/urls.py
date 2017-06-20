@@ -9,6 +9,9 @@ urlpatterns = [
     url(r'^match/$', views.match_list, name='match_list'),
     url(r'^match/id/(?P<match_id>[0-9]+)/$', views.match_form, name='match_form'),
     url(r'^match/new/$', views.match_new, name='match_new'),
+    url(r'^search/$', views.search_profile, name='search_profile'),
     url(r'^update_champs/$', views.update_champs_req, name='update_champs_req'),
     url(r'^get/champion_lane/$', views.get_champion_lane, name='get_champion_lane'),
+    url(r'^profile/(?P<server>\w+)/(?P<summoner_name>\w+)/$', views.profile_view, name='profile_view'),
+
 ]

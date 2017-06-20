@@ -6,6 +6,43 @@
   LolPath Index
 {% endblock %}
 
-{% block body %}
+{% block head %}
+  <link type="text/css" href="{% static 'lolpath/css/index.css' %}" rel="stylesheet">
+{% endblock %}
 
+{% block body %}
+  <form action="{% url 'lolpath:search_profile' %}" method="POST">
+  {% csrf_token %}
+    <div class="container">
+      <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+          <div class="input-group">
+                  <div class="input-group-btn search-panel">
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span id="search_concept">Server</span> <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#lan">LAN</a></li>
+                        <li><a href="#na">NA</a></li>
+                        <li><a href="#euw">EUW</a></li>
+                        <li><a href="#other">Other servers</a></li>
+                      </ul>
+                  </div>
+                  <input type="hidden" name="server" value="all" id="server">
+                  <input type="text" class="form-control" name="summoner" placeholder="Search summoner...">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </form>
+
+
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static 'lolpath/js/index.js' %}"></script>
 {% endblock %}
