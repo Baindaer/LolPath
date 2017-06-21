@@ -206,7 +206,7 @@ def search_profile(request):
     if request.method == 'POST':
         server = request.POST['server']
         summoner = request.POST['summoner']
-        if server = 'server':
+        if server == 'server':
             messages.error(request, 'You need to set the server')
 
         return HttpResponseRedirect(reverse('lolpath:match_form', args=(new_match.id,)))
