@@ -11,7 +11,7 @@ class Summoner(models.Model):
     name = models.CharField(max_length=64)
     summoner_level = models.IntegerField('Level')
     account_id = models.IntegerField('Account', default=False)
-    lolpath_user = models.ForeignKey(User)
+    lolpath_user = models.ForeignKey(User, on_delete="cascade")
     server = models.CharField(max_length=64)
 
 
@@ -47,8 +47,8 @@ class Champion(models.Model):
 
 class MatchReg(models.Model):
     # required
-    summoner_id = models.ForeignKey(Summoner)
-    champion_id = models.ForeignKey(Champion)
+    summoner_id = models.ForeignKey(Summoner, on_delete="cascade")
+    champion_id = models.ForeignKey(Champion, on_delete="cascade")
     lane = models.CharField('Lane', max_length=32)
     win = models.BooleanField(default=False)
     kills = models.IntegerField('Kills')
@@ -74,7 +74,7 @@ class MatchReg(models.Model):
 
 
 class ChampReport(models.Model):
-    champion_id = models.ForeignKey(Champion)
+    champion_id = models.ForeignKey(Champion, on_delete="cascade")
     lane = models.CharField('Lane', max_length=32)
     time_played = models.IntegerField('Time played')
     kills_avg = models.FloatField('Average kills')
@@ -87,5 +87,5 @@ class ChampReport(models.Model):
     gold_min = models.FloatField('Gold per min')
     kda = models.FloatField('KDA ratio')
     performance = models.FloatField('LolPath points')
-    summoner_id = models.ForeignKey(Summoner)
+    summoner_id = models.ForeignKey(Summoner,on_delete="cascade")
 
